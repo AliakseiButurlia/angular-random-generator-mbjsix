@@ -1,9 +1,16 @@
-<hello name="{{ name }}"></hello>
 
- 
-<h4>datetime: {{ time | date: 'MM/dd HH:mm:ss' }}</h4>
-<h4>momenttime: {{ momenttime }}</h4>
 
-<hr>
+<form class="decor" [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+<div class="form-left-decoration"></div>
+<div class="form-right-decoration"></div>
+<div class="circle"></div>
+<div class="form-inner">
+<input id="from" type="text" formControlName="from" placeholder="From">
+<input id="to" type="text" formControlName="from" placeholder="To">
 
-<h4>randomNumber: {{ randomNumber || 0}}</h4>
+<input type="submit" value="Generate">
+<h3>Number: {{ randomNumber || 0}}</h3>
+</div>
+</form>
+
+
