@@ -6,7 +6,7 @@ export class RandomService {
   public dataSubject = new Subject<number>();
   public dataState = this.dataSubject.asObservable();
 
-  public subjectdata(): void {
-    interval(1000).subscribe(x => this.dataSubject.next((Math.floor(Math.random() * 200) - 100)));
+  public subjectdata(from: number, to:number): number {
+    return Math.abs(Math.floor(Math.random() * (to - from) + from));
   }
 }

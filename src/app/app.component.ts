@@ -1,48 +1,38 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RandomService } from './services/random.service';
 import { Subscription } from 'rxjs';
-import moment from 'moment';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
   styleUrls: [ './app.component.css' ]
 })
-export class AppComponent implements OnInit, OnDestroy {
-  name = 'Angular';
-  time = new Date();
-  momenttime: string;
-  timer: NodeJS.Timer;
-  momenttimer: NodeJS.Timer;
+export class AppComponent {
+ 
 
   subscription: Subscription;
 
   randomNumber: number;
 
+  checkoutForm = this.formBuilder.group({
+    from: '',
+    to: ''
+  });
+
 
 
   constructor(
     private randomService: RandomService,
+    private formBuilder: FormBuilder,
   ) { }
 
-  ngOnInit() {
-    this.timer = setInterval(() => this.time = new Date(), 1000);
-    this.momenttimer = setInterval(() => this.momenttime = moment().format('MM/DD HH:mm:ss'), 1000);
-
-    this.randomService.subjectdata();
-    this.subscription = this.randomService.dataState.subscribe(
-      (value: number) => {
-        this.randomNumber = value;
-      }
-    )
-  }
-
-  ngOnDestroy() {
-    clearInterval(this.timer);
-    clearInterval(this.momenttimer);
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+  onSubmit(): void {
+    let from: number = this.checkoutForm.value.from;
+    let to: number = this.checkoutForm.value.to;
+    // Process checkout data here
+    this.randomNumber = this.randomService.subjectdata(from, to);
+    this.checkoutForm.reset();
   }
 
 }
